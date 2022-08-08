@@ -1,11 +1,11 @@
 import './App.css';
-import SingleBlock from './components/SingleBlock';
+import Grid from './components/Grid'
 
 
 function App() {
   return (
     <div className="App">
-      <SingleBlock />
+      <Grid />
     </div>
   );
 }

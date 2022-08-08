@@ -1,0 +1,16 @@
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100vw;
+    height: 100vh;
+}
+
+.swap {
+    position: absolute;
+    bottom: 50px;
+    height: 60px;
+    width: 200px;
+    background-color: white;
+    line-height: 60px;
+}

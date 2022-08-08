@@ -1,9 +1,7 @@
 .block {
+    margin: 5px;
     height: 100px;
     width: 100px;
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    left: 50%;
-    transform: translateX(-50%)
+    border-radius: 20px;
+    transition: background-color 1s;
 }
