@@ -3,6 +3,8 @@ import Block from '../Block'
 import space from '../../assets/space.jpg'
 import smile from '../../assets/smile.jpg'
 import moon from '../../assets/moon.jpg'
+import colors from '../../assets/colors.png'
+import vista from '../../assets/vista.jpg'
 import { useState } from 'react';
 import ColorThief from '../../../node_modules/colorthief/dist/color-thief.mjs'
 
@@ -20,7 +22,7 @@ const Grid = () => {
 
     const [blockColor, setBlockColor] = useState('green')
     const [count, setCount] = useState(1)
-    const [colorArray, setColorArray] = useState(createColorArray(rainbowArray))
+    const [colorArray, setColorArray] = useState([])
 
     //creating an array generator that creates an array for us to iterate on to create as many block as we want
     // const numberArrayGenerator = (num) => {
@@ -92,8 +94,12 @@ const Grid = () => {
         let containerHeight;
         let containerWidth;
         if (imageRatio < 1) {
-            containerWidth = screenWidth;
-            containerHeight = imageRatio * screenWidth;
+            if (width < screenWidth) {
+                containerWidth = width
+            } else {
+                containerWidth = screenWidth;
+            }
+            containerHeight = imageRatio * containerWidth;
             if (containerHeight < screenHeight) {
                 //still need to acccount for if it is divisable by pixel size
                 return pixelRounding(containerHeight, containerWidth, pixel)
@@ -103,8 +109,12 @@ const Grid = () => {
                 return pixelRounding(containerHeight, containerWidth, pixel)
             }
         } else if (imageRatio > 1) {
-            containerHeight = screenHeight;
-            containerWidth = screenHeight / imageRatio;
+            if (height < screenHeight) {
+                containerHeight = height
+            } else {
+                containerHeight = screenHeight;
+            }
+            containerWidth = containerHeight / imageRatio;
             if (containerWidth < screenWidth) {
                 //still need to acccount for if it is divisable by pixel size
                 return pixelRounding(containerHeight, containerWidth, pixel)
@@ -131,7 +141,7 @@ const Grid = () => {
     //     const container = document.getElementsByClassName('container')[0];
     //     container.append(image)
     // }
-    const pixelSize = 100
+    const pixelSize = 10
 
     const cutImageUp = async () => {
 
@@ -140,7 +150,7 @@ const Grid = () => {
         const heightOfOnePiece = pixelSize;
 
         const image = new Image()
-        image.src = moon;
+        image.src = space;
         image.onload = function () {
             // const image = document.getElementsByClassName('image')[0];
             let containerHeight, containerWidth
@@ -148,8 +158,13 @@ const Grid = () => {
 
             resizeContainer(containerHeight, containerWidth);
 
+            console.log(containerHeight, containerWidth)
+
             const numColsToCut = containerWidth / pixelSize;
             const numRowsToCut = containerHeight / pixelSize;
+
+            console.log(numColsToCut)
+            console.log(numRowsToCut)
 
             const imagePieces = []
             for (let x = 0; x < numColsToCut; ++x) {
@@ -161,6 +176,7 @@ const Grid = () => {
                     context.drawImage(image, x * widthOfOnePiece, y * heightOfOnePiece, widthOfOnePiece, heightOfOnePiece, 0, 0, canvas.width, canvas.height);
                     imagePieces.push(canvas.toDataURL())
 
+                    // console.log(imagePieces)
                 }
             }
 
@@ -170,6 +186,9 @@ const Grid = () => {
                 const img = new Image()
                 img.src = element
                 img.setAttribute('id', `img${index}`)
+
+                // console.log(img)
+
                 container.append(img)
             })
 
@@ -199,7 +218,7 @@ const Grid = () => {
                     return `rgb(${e[0]}, ${e[1]}, ${e[2]})`
                 })
 
-                console.log(colorArray)
+                // console.log(colorArray)
 
                 setColorArray(createColorArray(colorArray))
             })
