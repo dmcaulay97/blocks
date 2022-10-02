@@ -93,7 +93,7 @@ const Grid = () => {
         const screenWidth = window.innerWidth;
         let containerHeight;
         let containerWidth;
-        if (imageRatio < 1) {
+        if (imageRatio <= 1) {
             if (width < screenWidth) {
                 containerWidth = width
             } else {
@@ -141,7 +141,7 @@ const Grid = () => {
     //     const container = document.getElementsByClassName('container')[0];
     //     container.append(image)
     // }
-    const pixelSize = 10
+    const pixelSize = 20
 
     const cutImageUp = async () => {
 
@@ -150,25 +150,29 @@ const Grid = () => {
         const heightOfOnePiece = pixelSize;
 
         const image = new Image()
-        image.src = space;
+        image.src = smile;
         image.onload = function () {
             // const image = document.getElementsByClassName('image')[0];
             let containerHeight, containerWidth
-            [containerHeight, containerWidth] = determineAspectRatio(this.height, this.width, pixelSize)
+            [containerHeight, containerWidth] = determineAspectRatio(image.height, image.width, pixelSize)
+
+            console.log('image: ' + 'h:' + image.height + ' w:' + image.width)
+            console.log('container: ' + 'h:' + containerHeight + ' w:' + containerWidth)
+
 
             resizeContainer(containerHeight, containerWidth);
 
-            console.log(containerHeight, containerWidth)
+            // console.log(containerHeight, containerWidth)
 
             const numColsToCut = containerWidth / pixelSize;
             const numRowsToCut = containerHeight / pixelSize;
 
-            console.log(numColsToCut)
-            console.log(numRowsToCut)
+            // console.log(numColsToCut)
+            // console.log(numRowsToCut)
 
             const imagePieces = []
-            for (let x = 0; x < numColsToCut; ++x) {
-                for (let y = 0; y < numRowsToCut; ++y) {
+            for (let y = 0; y < numRowsToCut; ++y) {
+                for (let x = 0; x < numColsToCut; ++x) {
                     const canvas = document.createElement('canvas');
                     canvas.width = widthOfOnePiece;
                     canvas.height = heightOfOnePiece;
@@ -197,7 +201,7 @@ const Grid = () => {
 
 
 
-            const findColor = new Promise((resolve, rejecs) => {
+            const findColor = new Promise((resolve, reject) => {
                 imagePieces.forEach((element, index, array) => {
                     const img = document.getElementById(`img${index}`)
                     if (img.complete) {
@@ -260,11 +264,11 @@ const Grid = () => {
                 Cut
             </div>
 
-            <div className='button right' onClick={() => {
+            {/* <div className='button right' onClick={() => {
                 bubbleSort()
             }}>
                 Sort
-            </div>
+            </div> */}
         </div >
     )
 };
